@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
 
+//för att koppla lokal kod till git :::::::::: git remote add origin https://github.com/steffosteffo/my-react-appVerk.git
+// för att hitta programmet på nätet:::::::::: http://steffohost-hopto.org:3000/my-react-appVerk
+
+
 const App = () => {
   const [items, setItems] = useState([]);
   const [newItem, setNewItem] = useState({ name: '', type: 'tool', borrower: '', borrowed: false });
