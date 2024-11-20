@@ -9,7 +9,8 @@ const App = () => {
   // Fetch items when component mounts
   useEffect(() => {
     axios
-      .get('http://localhost:3000/api/items')
+      //.get('http://localhost:3000/api/items')
+      .get('http://steffohost.hopto:3000/api/items')
       .then((response) => {
         setItems(response.data);
       })
@@ -23,7 +24,8 @@ const App = () => {
     const borrower = prompt('Enter the name of the person borrowing the item:');
     if (borrower) {
       try {
-        const response = await axios.post(`http://localhost:3000/api/items/borrow/${id}`, { borrower });
+      //const response = await axios.post(`http://localhost:3000/api/items/borrow/${id}`, { borrower });
+        const response = await axios.post(`http://steffohost.hopto.org:3000/api/items/borrow/${id}`, { borrower });
         setItems(items.map(item => item._id === id ? response.data : item)); // Update the item in state
       } catch (error) {
         console.error('Error borrowing item:', error);
@@ -34,7 +36,8 @@ const App = () => {
   // Return an item
   const returnItem = async (id) => {
     try {
-      const response = await axios.post(`http://localhost:3000/api/items/return/${id}`);
+      //const response = await axios.post(`http://localhost:3000/api/items/return/${id}`);
+      const response = await axios.post(`http://steffohost.hopto.org:3000/api/items/return/${id}`);
       setItems(items.map(item => item._id === id ? response.data : item)); // Update the item in state
     } catch (error) {
       console.error('Error returning item:', error);
@@ -44,12 +47,13 @@ const App = () => {
   
   const addItem = async () => {
     if (newItem.name.trim() === '') {
-      alert('Skriv ett verktygsnamn');
+      alert('Skriv ett verktygsnamn v3');
       return;
     }
   
     try {
-      const response = await axios.post('http://localhost:3000/api/items', newItem);
+      //const response = await axios.post('http://localhost:3000/api/items', newItem);
+      const response = await axios.post('http://steffohost.hopto.org:3000/api/items', newItem);
       
       // Add the new item to the state
       const updatedItems = [...items, response.data];
@@ -72,7 +76,8 @@ const App = () => {
   // Delete an item
   const deleteItem = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/api/items/${id}`);
+     // await axios.delete(`http://localhost:3000/api/items/${id}`);
+     await axios.delete(`http://steffohost.hopto.org:3000/api/items/${id}`);
       setItems(items.filter(item => item._id !== id)); // Remove the item from state
       alert('Verktyg togs bort');
     } catch (error) {
