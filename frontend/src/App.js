@@ -14,7 +14,7 @@ const App = () => {
   useEffect(() => {
     axios
       //.get('http://localhost:3000/api/items')
-      .get('http://steffohost.hopto:3000/api/items')
+      .get('http://steffohost.hopto.org:3000/api/items')
       .then((response) => {
         setItems(response.data);
       })
