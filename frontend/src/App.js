@@ -51,7 +51,7 @@ const App = () => {
   
   const addItem = async () => {
     if (newItem.name.trim() === '') {
-      alert('Skriv ett verktygsnamn v3');
+      alert('Skriv ett verktygsnamn');
       return;
     }
   
