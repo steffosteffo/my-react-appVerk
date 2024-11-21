@@ -116,3 +116,26 @@ h3 {
     width: 100%;
   }
 }
+
+
+/* Grundläggande styling för posten */
+.item {
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease;
+}
+
+/* Markerad post när objektet är lånat */
+.item.borrowed {
+  background-color: #f8d7da; /* Ljus röd färg */
+  border-color: #f5c6cb;    /* Röd kant */
+}
+
+/* Standardfärg för tillgängliga objekt */
+.item.available {
+  background-color: #d4edda; /* Ljus grön färg */
+  border-color: #c3e6cb;     /* Grön kant */
+}
+
