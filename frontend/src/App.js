@@ -63,10 +63,10 @@ const App = () => {
 
   return (
     <div className="App">
-      <h1>Tool Lending</h1>
+      <h1>UTLÅNING AV VERKTYG</h1>
 
       <div className="add-item-form">
-        <h3>Add a New Tool:</h3>
+        <h3>Lägg till ett nytt Verktygsnamn:</h3>
         <input
           type="text"
           placeholder="Verktygsnamn"
