@@ -69,11 +69,11 @@ const App = () => {
         <h3>Add a New Tool:</h3>
         <input
           type="text"
-          placeholder="Tool Name"
+          placeholder="Verktygsnamn"
           value={newItem.name}
           onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
         />
-        <button onClick={addItem}>Add Tool</button>
+        <button onClick={addItem}>Lägg till verktyg</button>
       </div>
 
       <div>
@@ -81,17 +81,17 @@ const App = () => {
           <div key={item._id} className="item">
             <div>
               <h3>{item.name}</h3>
-              <p>{item.borrowed ? `Borrowed by: ${item.borrower}` : 'Available'}</p>
+              <p>{item.borrowed ? `Lånad av: ${item.borrower}` : 'Tillgänglig'}</p>
             </div>
             <div>
               <button onClick={() => borrowItem(item._id)} disabled={item.borrowed}>
-                Borrow
+                Låna
               </button>
               <button onClick={() => returnItem(item._id)} disabled={!item.borrowed}>
-                Return
+                Lämna tillbaka
               </button>
               <button onClick={() => deleteItem(item._id)} className="delete-btn">
-                Delete
+                Ta bort 
               </button>
             </div>
           </div>
