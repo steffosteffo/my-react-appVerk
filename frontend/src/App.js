@@ -78,7 +78,15 @@ const App = () => {
 
       <div>
         {items.map((item) => (
-          <div key={item._id} className="item">
+          
+             
+             <div 
+                key={item._id} 
+                className={`item ${item.borrowed ? 'borrowed' : 'available'}`}
+              >
+
+
+
             <div>
               <h3>{item.name}</h3>
               <p>{item.borrowed ? `Lånad av: ${item.borrower}` : 'Tillgänglig'}</p>
