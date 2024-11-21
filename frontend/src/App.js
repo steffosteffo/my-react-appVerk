@@ -65,7 +65,7 @@ const App = () => {
     <div className="App">
       <h1>UTLÅNING AV VERKTYG</h1>
 
-      <div className="add-item-form">
+    {/*   <div className="add-item-form">
         <h3>Lägg till ett nytt Verktygsnamn:</h3>
         <input
           type="text"
@@ -74,7 +74,7 @@ const App = () => {
           onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
         />
         <button onClick={addItem}>Lägg till verktyg</button>
-      </div>
+      </div>*/}
 
       <div>
         {items.map((item) => (
@@ -90,9 +90,9 @@ const App = () => {
               <button onClick={() => returnItem(item._id)} disabled={!item.borrowed}>
                 Lämna tillbaka
               </button>
-              <button onClick={() => deleteItem(item._id)} className="delete-btn">
+            {/*   <button onClick={() => deleteItem(item._id)} className="delete-btn">
                 Ta bort 
-              </button>
+              </button>*/}
             </div>
           </div>
         ))}
