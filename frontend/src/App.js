@@ -7,10 +7,28 @@ const App = () => {
   const [newItem, setNewItem] = useState({ name: '', type: 'tool', borrower: '', borrowed: false });
 
   useEffect(() => {
-    axios
+   /* axios
       .get('http://steffohost.hopto.org:3000/api/items')
       .then((response) => setItems(response.data))
       .catch((error) => console.error('Error fetching items:', error));
+   */
+      axios.get('http://steffohost.hopto.org:3000/api/items')
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        if (error.response) {
+          console.error('Problem with response->:', error.response);
+        } else if (error.request) {
+          console.error('No response received->:', error.request);
+        } else {
+          console.error('Error message->:', error.message);
+        }
+      });
+    
+
+
+
   }, []);
 
   const borrowItem = async (id) => {
