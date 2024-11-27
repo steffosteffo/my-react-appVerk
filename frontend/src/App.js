@@ -9,8 +9,8 @@ const App = () => {
   useEffect(() => {
 
       
-  // axios.get('http://steffohost.hopto.org:3000/api/items')
-   axios.get('http://192.168.10.162:3000/api/items')  
+   axios.get('http://steffohost.hopto.org:3000/api/items')
+  // axios.get('http://192.168.10.162:3000/api/items')  
       .then(response => {
         console.log(response.data); 
       })
@@ -33,8 +33,8 @@ const App = () => {
     const borrower = prompt('Enter the name of the person borrowing the item:');
     if (borrower) {
       try {
-        //const response = await axios.post(`http://steffohost.hopto.org:3000/api/items/borrow/${id}`, { borrower });
-        const response = await axios.post(`http://192.168.10.162:3000/api/items/borrow/${id}`, { borrower });
+        const response = await axios.post(`http://steffohost.hopto.org:3000/api/items/borrow/${id}`, { borrower });
+        //const response = await axios.post(`http://192.168.10.162:3000/api/items/borrow/${id}`, { borrower });
         setItems(items.map(item => item._id === id ? response.data : item));
       } catch (error) {
         console.error('Error borrowing item:', error);
@@ -44,8 +44,8 @@ const App = () => {
 
   const returnItem = async (id) => {
     try {
-     // const response = await axios.post(`http://steffohost.hopto.org:3000/api/items/return/${id}`);
-      const response = await axios.post(`http://192.168.10.162:3000/api/items/return/${id}`);
+      const response = await axios.post(`http://steffohost.hopto.org:3000/api/items/return/${id}`);
+     // const response = await axios.post(`http://192.168.10.162:3000/api/items/return/${id}`);
       setItems(items.map(item => item._id === id ? response.data : item));
     } catch (error) {
       console.error('Error returning item:', error);
@@ -59,8 +59,8 @@ const App = () => {
     }
 
     try {
-   //  const response = await axios.post('http://steffohost.hopto.org:3000/api/items', newItem);
-      const response = await axios.post('http://192.168.10.162:3000/api/items', newItem);
+     const response = await axios.post('http://steffohost.hopto.org:3000/api/items', newItem);
+   //   const response = await axios.post('http://192.168.10.162:3000/api/items', newItem);
       const updatedItems = [...items, response.data];
       updatedItems.sort((a, b) => a.name.localeCompare(b.name));
       setItems(updatedItems);
@@ -73,8 +73,8 @@ const App = () => {
   const deleteItem = async (id) => {
     try {
                         
-   ///   await axios.delete(`http://steffohost.hopto.org:3000/api/items/${id}`);
-      await axios.delete(`http://192.168.10.162:3000/api/items/${id}`);
+      await axios.delete(`http://steffohost.hopto.org:3000/api/items/${id}`);
+   //   await axios.delete(`http://192.168.10.162:3000/api/items/${id}`);
       setItems(items.filter(item => item._id !== id));
       alert('Item removed');
     } catch (error) {
@@ -84,13 +84,13 @@ const App = () => {
 
   return (
     <div className="App">
-      <h1>UTLÅNING AV VERKTYG</h1>
+      <h1>UTLÅNING AV VERKTYG2</h1>
 
       <div className="add-item-form">
         <h3>Lägg till ett nytt Verktygsnamn:</h3>
         <input
           type="text"
-          placeholder="Verktygsnamn"
+          placeholder="Verktygsnamn" 
           value={newItem.name}
           onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
         />
@@ -111,7 +111,7 @@ const App = () => {
 
             <div>
               <h3>{item.name}</h3>
-              <p>{item.borrowed ? `Lånad av: ${item.borrower}` : 'Tillgänglig'}</p>
+              <p>{item.borrowed ? `Lånad2 av: ${item.borrower}` : 'Tillgänglig'}</p>
             </div>
             <div>
               <button onClick={() => borrowItem(item._id)} disabled={item.borrowed}>
