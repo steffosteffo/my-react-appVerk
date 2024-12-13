@@ -7,35 +7,31 @@ const App = () => {
   const [newItem, setNewItem] = useState({ name: '', type: 'tool', borrower: '', borrowed: false });
 
   useEffect(() => {
-
-      
-   axios.get('http://steffohost.hopto.org:3000/api/items')
-  // axios.get('http://192.168.10.162:3000/api/items')  
+    axios.get('http://steffohost.hopto.org:5000/api/items')
       .then(response => {
         console.log(response.data); 
+        setItems(response.data); // Make sure to update state with fetched data
       })
       .catch(error => {
         if (error.response) {
-          console.error('Problem with response->:', error.response); 
+          console.error('Problem with response->:', error.response);
+          alert('Error fetching data: ' + error.response.statusText);
         } else if (error.request) {
           console.error('No response received->:', error.request);
+          alert('Error: No response received from the server.');
         } else {
           console.error('Error message->:', error.message);
+          alert('Error: ' + error.message);
         }
       });
-    
-
-
-
   }, []);
 
   const borrowItem = async (id) => {
     const borrower = prompt('Enter the name of the person borrowing the item:');
     if (borrower) {
       try {
-        const response = await axios.post(`http://steffohost.hopto.org:3000/api/items/borrow/${id}`, { borrower });
-        //const response = await axios.post(`http://192.168.10.162:3000/api/items/borrow/${id}`, { borrower });
-        setItems(items.map(item => item._id === id ? response.data : item));
+        const response = await axios.post(`http://steffohost.hopto.org:5000/api/items/borrow/${id}`, { borrower });
+        setItems(prevItems => prevItems.map(item => item._id === id ? response.data : item));
       } catch (error) {
         console.error('Error borrowing item:', error);
       }
@@ -44,9 +40,8 @@ const App = () => {
 
   const returnItem = async (id) => {
     try {
-      const response = await axios.post(`http://steffohost.hopto.org:3000/api/items/return/${id}`);
-     // const response = await axios.post(`http://192.168.10.162:3000/api/items/return/${id}`);
-      setItems(items.map(item => item._id === id ? response.data : item));
+      const response = await axios.post(`http://steffohost.hopto.org:5000/api/items/return/${id}`);
+      setItems(prevItems => prevItems.map(item => item._id === id ? response.data : item));
     } catch (error) {
       console.error('Error returning item:', error);
     }
@@ -59,11 +54,12 @@ const App = () => {
     }
 
     try {
-     const response = await axios.post('http://steffohost.hopto.org:3000/api/items', newItem);
-   //   const response = await axios.post('http://192.168.10.162:3000/api/items', newItem);
-      const updatedItems = [...items, response.data];
-      updatedItems.sort((a, b) => a.name.localeCompare(b.name));
-      setItems(updatedItems);
+      const response = await axios.post('http://steffohost.hopto.org:5000/api/items', newItem);
+      setItems(prevItems => {
+        const updatedItems = [...prevItems, response.data];
+        updatedItems.sort((a, b) => a.name.localeCompare(b.name));
+        return updatedItems;
+      });
       setNewItem({ name: '', type: 'tool', borrower: '', borrowed: false });
     } catch (error) {
       console.error('Error adding item:', error);
@@ -72,10 +68,8 @@ const App = () => {
 
   const deleteItem = async (id) => {
     try {
-                        
-      await axios.delete(`http://steffohost.hopto.org:3000/api/items/${id}`);
-   //   await axios.delete(`http://192.168.10.162:3000/api/items/${id}`);
-      setItems(items.filter(item => item._id !== id));
+      await axios.delete(`http://steffohost.hopto.org:5000/api/items/${id}`);
+      setItems(prevItems => prevItems.filter(item => item._id !== id));
       alert('Item removed');
     } catch (error) {
       console.error('Error deleting item:', error);
@@ -90,7 +84,7 @@ const App = () => {
         <h3>Lägg till ett nytt Verktygsnamn:</h3>
         <input
           type="text"
-          placeholder="Verktygsnamn" 
+          placeholder="Verktygsnamn"
           value={newItem.name}
           onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
         />
@@ -98,20 +92,14 @@ const App = () => {
       </div>
 
       <div>
-        {items.map((item) => ( 
-          
-             
-             <div 
-                key={item._id} 
-                className={`item ${item.borrowed ? 'borrowed' : 'available'}`}
-              >
-
-
-
-
+        {items.map((item) => (
+          <div
+            key={item._id}
+            className={`item ${item.borrowed ? 'borrowed' : 'available'}`}
+          >
             <div>
               <h3>{item.name}</h3>
-              <p>{item.borrowed ? `Lånad2 av: ${item.borrower}` : 'Tillgänglig'}</p>
+              <p>{item.borrowed ? `Lånad av: ${item.borrower}` : 'Tillgänglig'}</p>
             </div>
             <div>
               <button onClick={() => borrowItem(item._id)} disabled={item.borrowed}>
@@ -120,8 +108,8 @@ const App = () => {
               <button onClick={() => returnItem(item._id)} disabled={!item.borrowed}>
                 Lämna tillbaka
               </button>
-               <button onClick={() => deleteItem(item._id)} className="delete-btn">
-                Ta bort 
+              <button onClick={() => deleteItem(item._id)} className="delete-btn">
+                Ta bort
               </button>
             </div>
           </div>
